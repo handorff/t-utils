@@ -141,6 +141,17 @@ const formatHeadsignRows = (data, included) => {
   return headsignData
 }
 
+const getChildStops = included => {
+  if (included) {
+    const childStops = included.filter(
+      ({ attributes: { location_type: locationType } }) => locationType === 0
+    )
+    return childStops.map(({ id }) => id)
+  } else {
+    return []
+  }
+}
+
 const HeadsignTable = ({ selectedStops }) => {
   const [headsignData, setHeadsignData] = useState()
   const columns = useMemo(
@@ -155,12 +166,23 @@ const HeadsignTable = ({ selectedStops }) => {
 
   useEffect(() => {
     const stopQuery = selectedStops.join(",")
+
     fetch(
-      `https://api-v3.mbta.com/route_patterns?filter[stop]=${stopQuery}&include=representative_trip`
+      `https://api-v3.mbta.com/stops?filter[id]=${stopQuery}&filter[location_type]=1&include=child_stops`
     )
       .then(response => response.json())
-      .then(({ data, included }) => formatHeadsignRows(data, included))
-      .then(headsignData => setHeadsignData(headsignData))
+      .then(({ included }) => getChildStops(included))
+      .then(childStops => {
+        const stopsWithChildren = [...childStops, ...selectedStops]
+        const stopsWithChildrenQuery = stopsWithChildren.join(",")
+
+        fetch(
+          `https://api-v3.mbta.com/route_patterns?filter[stop]=${stopsWithChildrenQuery}&include=representative_trip`
+        )
+          .then(response => response.json())
+          .then(({ data, included }) => formatHeadsignRows(data, included))
+          .then(headsignData => setHeadsignData(headsignData))
+      })
   }, [selectedStops])
 
   if (headsignData) {
