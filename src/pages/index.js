@@ -8,6 +8,9 @@ const Home = () => {
         <Link to="/stops">Routes and Headsigns at Stops</Link>
       </div>
       <div>
+        <Link to="/schedule">First and Last Scheduled Stops</Link>
+      </div>
+      <div>
         <Link to="/eink">Bus e-Ink sign locations</Link>
       </div>
     </div>

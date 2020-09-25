@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react"
 import Select, { createFilter } from "react-select"
 import _ from "lodash"
 
-const StopPicker = ({ allStops, setSelectedStops }) => {
+const MultiStopPicker = ({ allStops, setSelectedStops }) => {
   const [value, setValue] = useState(null)
   const [inputValue, setInputValue] = useState("")
 
@@ -64,4 +64,4 @@ const StopPicker = ({ allStops, setSelectedStops }) => {
   }
 }
 
-export default StopPicker
+export default MultiStopPicker

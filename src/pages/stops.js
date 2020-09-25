@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import StopPicker from "../components/stop_picker"
+import MultiStopPicker from "../components/multi_stop_picker"
 import RouteTable from "../components/route_table"
 import HeadsignTable from "../components/headsign_table"
 
@@ -23,7 +23,10 @@ const Stops = () => {
 
   return (
     <div>
-      <StopPicker allStops={allStops} setSelectedStops={setSelectedStops} />
+      <MultiStopPicker
+        allStops={allStops}
+        setSelectedStops={setSelectedStops}
+      />
       {selectedStops.length > 0 && <RouteTable selectedStops={selectedStops} />}
       {selectedStops.length > 0 && (
         <HeadsignTable selectedStops={selectedStops} />
