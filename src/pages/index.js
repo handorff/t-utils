@@ -13,6 +13,9 @@ const Home = () => {
       <div>
         <Link to="/eink">Bus e-Ink sign locations</Link>
       </div>
+      <div>
+        <Link to="/entrances">Station entrances</Link>
+      </div>
     </div>
   )
 }
